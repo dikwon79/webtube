@@ -1,0 +1,28 @@
+{
+  "name": "webtube",
+  "version": "1.0.0",
+  "description": "the best way to waach the video",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dikwon79/webtube.git"
+  },
+  "scripts": {
+    "dev": "nodemon --exec babel-node src/server.js"
+  },
+  "author": "dongil",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dikwon79/webtube/issues"
+  },
+  "homepage": "https://github.com/dikwon79/webtube#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.22.1",
+    "@babel/node": "^7.22.1",
+    "@babel/preset-env": "^7.22.4",
+    "nodemon": "^2.0.22"
+  }
+}
