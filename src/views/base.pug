@@ -1,0 +1,20 @@
+doctype html 
+html(lang="ko")
+    head    
+        title #{pageTitle} | Webtube
+        link(rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css") 
+    body   
+        
+        header
+      
+            small Hello 
+            nav 
+                ul
+                    li 
+                        a(href="/login") login 
+                        a(href="/videos/upload") Upload Video
+
+            h1 #{pageTitle}
+        main 
+            block content
+    include partials/footer
