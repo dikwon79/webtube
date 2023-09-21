@@ -1,0 +1,11 @@
+{
+  "name": "webtube",
+  "version": "1.0.0",
+  "description": "this is easy way to listen the music for my dad",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
