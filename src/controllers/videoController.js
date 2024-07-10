@@ -29,8 +29,14 @@ export const trending = (req, res) => {
     
     return res.render("home", {pageTitle : "Home", videos});
 };
-export const see = (req, res) => res.render("watch");
+export const see = (req, res) => {
+    const {id} = req.params;
+    //const id = req.params.id;   둘다 같은 표현 위는 ES6버젼
+    console.log("Show video", id);
+    const video = videos[id - 1];
 
+    return res.render("watch", {pageTitle :`Watching ${video.title}`});
+};
 export const edit = (req, res) => res.render("edit");
 
 
