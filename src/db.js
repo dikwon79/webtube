@@ -1,9 +1,6 @@
 import mongoose from "mongoose";
 
-mongoose.Connection("mongodb://127.0.0.1:27017/wetube",{
-    useNewUrlParser: true,    
-    useUnifiedTopology: true, 
-  });
+mongoose.Connect("mongodb://127.0.0.1:27017/wetube");
 
 const db = mongoose.connection;
 
