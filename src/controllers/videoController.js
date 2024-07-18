@@ -21,6 +21,7 @@ export const watch = async (req, res) => {
 export const getEdit = async(req, res) => {
     const {id} = req.params;
     const video = await Video.findById(id);
+    //이경우는 edit page에 오브젝트를 보내줘야 한다. 
     if(!video){
         return res.render("404", { pageTitle: "Video not found" });
     }
@@ -32,16 +33,26 @@ export const postEdit = async(req, res) => {
     const {id} = req.params;
     const {title, description, hashtags} = req.body;
 
-    const video = await Video.findById(id);
+    //const video = await Video.findById(id);
+    // video object가 필요없기때문에 체크만 하면 되므로....
+    const video = await Video.exists({ _id: id});
 
     if(!video){
         return res.render("404", { pageTitle: "Video not found" });
     }
-    video.title = title;
-    video.description = description;
-    video.hashtags = hashtags.split(",").map((word) => `#${word}`);
-    await video.save();
-    
+
+    await Video.findByIdAndUpdate(id, {
+        title, description, hashtags: hashtags
+        .split(",")
+        .map((word) => (word.startsWith("#") ? word : `#${word}`)),
+    });
+    // video.title = title;
+    // video.description = description;
+    // video.hashtags = hashtags
+    //     .split(",")
+    //     .map((word) => (word.startsWith("#") ? word : `#${word}`));
+    // await video.save();
+
     return res.redirect(`/videos/${id}`);
 };
 
@@ -56,11 +67,9 @@ export const postUpload = async (req, res) => {
             title: title,
             description: description,
             //createdAt: Date.now(),
-            hashtags: hashtags.split(",").map((word) => `#${word}`),
-            // meta: {
-            //     views: 0,
-            //     rating: 0,
-            // },
+            hashtags: hashtags
+                .split(",")
+                .map((word) => (word.startsWith("#") ? word : `#${word}`)),
     
         });
         return res.redirect("/");
