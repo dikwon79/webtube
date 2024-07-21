@@ -13,7 +13,7 @@ export const watch = async (req, res) => {
     const video = await Video.findById(id);
     
     if(!video){
-        return res.render("404", { pageTitle: "Video not found." });
+        return res.status(404).render("404", { pageTitle: "Video not found." });
     }
     return res.render("watch", { pageTitle : video.title, video });
 };
@@ -23,7 +23,7 @@ export const getEdit = async(req, res) => {
     const video = await Video.findById(id);
     //이경우는 edit page에 오브젝트를 보내줘야 한다. 
     if(!video){
-        return res.render("404", { pageTitle: "Video not found" });
+        return res.status(404).render("404", { pageTitle: "Video not found" });
     }
     return res.render("edit", { pageTitle: `Edit: ${video.title}`, video });
 
@@ -67,7 +67,7 @@ export const postUpload = async (req, res) => {
         return res.redirect("/");
     } catch(error){
         console.log(error);
-        return res.render("upload", {
+        return res.status(400).render("upload", {
             pageTitle: "Upload Video", 
             errorMessage: error._message,
         });
