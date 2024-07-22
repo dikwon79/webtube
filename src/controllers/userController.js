@@ -1,16 +1,16 @@
 import User from "../models/User";
 import bcrypt from "bcrypt";
 
-export const getJoin = (req, res) => res.render("join", { PageTitle: "Join" });
+export const getJoin = (req, res) => res.render("join", { pageTitle: "Join" });
 export const postJoin = async(req, res) => {
 
     console.log(req.body);
     const {name, username, email, password, password2, location } = req.body;
-    const PageTitle = "Join";
+    const pageTitle = "Join";
 
     if(password != password2){
         return res.status(400).render("join", { 
-            PageTitle,
+            pageTitle,
             errorMessage: "Password confirmation does not match.",
         
         });
@@ -19,7 +19,7 @@ export const postJoin = async(req, res) => {
     
     if(exists){
         return res.status(400).render("join", { 
-            PageTitle,
+            pageTitle,
             errorMessage: "This username/email is already taken.",
         
         });
@@ -73,7 +73,8 @@ export const postLogin = async(req, res) => {
         });
 
     }
-    console.log("LOG USER IN! COMING SOON!");
+    req.session.loggedIn = true;
+    req.session.user = user;
     return res.redirect("/");
 };
 
