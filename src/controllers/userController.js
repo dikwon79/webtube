@@ -89,14 +89,44 @@ export const postEdit = async (req, res) => {
       body :{name, email, username, location}
     } = req;
     
-    await User.findByIdAndUpdate(_id, {
+    const findUsername = await User.findOne({ username });
+    console.log(`check: ${findUsername}`);
+    const findEmail = await User.findOne({ email });
+    if (
+        (findUsername != null && findUsername._id != _id) ||
+        (findEmail != null && findEmail._id != _id)
+        ) {
+        return res.render("editProfile", {
+          pageTitle: "Edit  Profile",
+          errorMessage: "User is exist",
+        });
+    }
+    
+
+    const updatedUser = await User.findByIdAndUpdate(_id, {
         name,
         email,
         username,
         location,    
-    });
-    return res.render("edit-profile");
+    },
+    {  new: true });
+
+    req.session.user = updatedUser;
+    return res.redirect("/users/edit");
 };
 export const remove  = (req, res) =>res.send("Remove User");
 export const logout  = (req, res) =>res.send("logout");
+
+export const getChangePassword = (req, res) => {
+    //깃허브 로그인시
+    if (req.session.user.socialOnly == true) {
+        return res.redirect("/");
+    }
+    return res.render("users/change-password", { pageTitle: "Change Password"});
+
+};
+
+export const postChangePassword = (req, res) => {
+    return res.redirect("/");
+};
 export const see  = (req, res) =>res.send("see User");
